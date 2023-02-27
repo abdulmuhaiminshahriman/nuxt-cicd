@@ -5,5 +5,10 @@ describe('NuxtLogo', () => {
   test('is a Vue instance', () => {
     const wrapper = mount(NuxtLogo)
     expect(wrapper.vm).toBeTruthy()
-  })
+  });
+  
+  test("NuxtLogo renders properly", () => {
+    const wrapper = shallowMount(NuxtLogo, {})
+    expect(wrapper.html()).toMatchSnapshot();
+  });
 })
