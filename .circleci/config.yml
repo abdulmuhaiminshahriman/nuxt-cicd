@@ -1,6 +1,33 @@
 version: 2
 
 jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/node:12.16.0
+    steps:
+      - checkout
+      - run:
+          name: update-yarn
+          command: "sudo yarn install -g npm@6"
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: install-packages
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: test
+          command: yarn test
+      - run:
+          name: build-project
+          command: yarn generate:gh-pages
+      - run:
+          name: test
+          command: yarn test
   ci:
     docker:
       - image: cimg/node:lts

@@ -1,3 +1,12 @@
+const routerBase =
+  process.env.DEPLOY_ENV === "GH_PAGES"
+    ? {
+      router: {
+        base: "/nuxt-cicd/"
+      }
+    }
+    : {};
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -13,6 +22,7 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
+  ...routerBase,
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
